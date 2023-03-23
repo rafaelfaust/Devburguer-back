@@ -17,7 +17,7 @@ class ProductController {
             return response.status(400).json({ error: err.errors })
         }
 
-        const { file:path } = request.file
+        const { filename:path } = request.file
         const { name, price, category } = request.body
 
         const product = await Product.create({
@@ -28,6 +28,13 @@ class ProductController {
         })
 
         return response.json(product)
+    }
+
+    async index(request, response){
+
+        const products = await Product.findAll()
+
+        return response.json(products)
     }
 }
 
