@@ -11,8 +11,6 @@ class ProductController {
             category: Yup.string().required(),
         })
 
-
-
         try {
             await schema.validateSync(request.body, { abortEarly: false })
         } catch (err) {
@@ -30,6 +28,12 @@ class ProductController {
         })
 
         return response.json(product)
+    }
+
+    async index(request, response){
+        const products = await Product.findAll()
+
+        return response.json(products)
     }
 }
 

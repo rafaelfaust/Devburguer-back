@@ -1,4 +1,6 @@
 import * as Yup from 'yup'
+import jwt from 'jsonwebtoken'
+import authConfig from '../../config/auth'
 import User from '../models/User'
 
 class SessionController {
@@ -24,7 +26,13 @@ class SessionController {
 
         if (!(await user.checkPassword(password))) userEmailOrPasswordIncorrect()
 
-        return response.json({ id: user.id, email: user.email, name: user.name, admin: user.admin })
+        return response.json({
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            admin: user.admin,
+            token: jwt.sign({ id: user.id }, authConfig.secret, authConfig.expireIn)
+        })
     }
 }
 
