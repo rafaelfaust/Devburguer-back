@@ -5,6 +5,8 @@ import Category from '../models/Category'
 class CategoryController {
     async store(request, response) {
 
+        console.log(request.body)
+
         const schema = Yup.object().shape({
             name: Yup.string().required(),
         })
@@ -18,7 +20,9 @@ class CategoryController {
         const { name } = request.body
 
         const categoryExists = await Category.findOne({
-            where: { name },
+            where: { 
+                name,
+            },
         })
 
         if (categoryExists){
@@ -28,7 +32,8 @@ class CategoryController {
         const { id } = await Category.create({ name })
 
         return response.json({ name, id })
-    }
+    }   
+    
 
     async index(request, response){
         const category = await Category.findAll()
