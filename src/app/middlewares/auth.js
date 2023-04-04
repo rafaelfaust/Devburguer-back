@@ -18,10 +18,11 @@ export default (request, response, next) => {
             }
 
             request.userId = decoded.id
+            request.userName = decoded.name
         })
 
     } catch(err){
-        
+        return response.status(401).json({ error: 'Token is invalid' })
     }
 
     return next()
