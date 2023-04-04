@@ -1,16 +1,20 @@
 import * as Yup from 'yup'
+import Product from '../models/Product'
+import Category from '../models/Category'
 
 class OrderController {
     async store(request, response) {
 
         const schema = Yup.object().shape({
-            products: Yup.array().requerid().of(
-                Yup.object().shape({
-                    id: Yup.number().requerid(),
-                    quantity: Yup.number().requerid(),
+            products: Yup.array()
+                .required()
+                .of(
+                    Yup.object().shape({
+                        id: Yup.number().required(),
+                        quantity: Yup.number().required(),
 
-                })
-            ),
+                    })
+                ),
         })
 
         try {
@@ -19,8 +23,46 @@ class OrderController {
             return response.status(400).json({ error: err.errors })
         }
 
+        const productsId = request.body.products.map(product => product.id)
 
-        return response.status(201).json(request.body)
+        const updateProducts = await Product.findAll({
+            where: {
+                id: productsId,
+            },
+            include: [{
+                model: Category,
+                as: 'category',
+                attributes: ['name']
+            }]
+        })
+
+        const editedProducts = updateProducts.map(product => {
+
+            const productIdex = request.body.products.findIndex(requestProduct => requestProduct.id === product.id)
+
+
+            const newProduct = {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                category: product.category.name,
+                url: product.url,
+                quantity: request.body.products[productIdex].quantity,
+            }
+
+            return newProduct
+        })
+
+        const order = {
+            user: {
+                id: request.userId,
+                name: request.userName,
+            },
+            products: editedProducts,
+        }
+
+
+        return response.status(201).json(editedProducts)
     }
 }
 
