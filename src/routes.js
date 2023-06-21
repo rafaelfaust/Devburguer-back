@@ -10,7 +10,6 @@ import UserController from './app/controllers/UserController'
 import CategoryController from './app/controllers/CategoryController'
 import OrderController from './app/controllers/OrderController'
 
-
 const upload = multer(multerConfig)
 
 const routes = new Router()
