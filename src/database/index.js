@@ -23,6 +23,7 @@ class Database {
   }
 
   mongo () {
+    // eslint-disable-next-line no-unused-expressions
     this.mongoConnection - mongoose.connect(
       'mongodb://localhost:27017/devburger',
       {
