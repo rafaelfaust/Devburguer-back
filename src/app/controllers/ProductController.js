@@ -8,6 +8,7 @@ class ProductController {
     try {
       const schema = Yup.object().shape({
         name: Yup.string().required(),
+        detail: Yup.string(),
         price: Yup.number().required(),
         category_id: Yup.number().required(),
         offer: Yup.boolean()
@@ -26,10 +27,11 @@ class ProductController {
       }
 
       const { filename: path } = request.file
-      const { name, price, category_id, offer } = request.body
+      const { name, detail, price, category_id, offer } = request.body
 
       const product = await Product.create({
         name,
+        detail,
         price,
         category_id,
         path,
@@ -58,6 +60,7 @@ class ProductController {
     try {
       const schema = Yup.object().shape({
         name: Yup.string(),
+        detail:Yup.string(),
         price: Yup.number(),
         category_id: Yup.number(),
         offer: Yup.boolean()
@@ -88,10 +91,11 @@ class ProductController {
         path = request.file.filename
       }
 
-      const { name, price, category_id, offer } = request.body
+      const { name, detail, price, category_id, offer } = request.body
 
       await Product.update({
         name,
+        detail,
         price,
         category_id,
         path,

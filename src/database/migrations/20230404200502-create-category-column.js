@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
 
-     await queryInterface.addColumn('categories', 'path',{ 
+     await queryInterface.addColumn('Categories', 'path',{ 
       type: Sequelize.STRING, 
     })
 
@@ -12,7 +12,7 @@ module.exports = {
 
   async down (queryInterface, Sequelize) {
 
-    await queryInterface.removeColumn('categories', 'path')
+    await queryInterface.removeColumn('Categories', 'path')
      
   }
 }
