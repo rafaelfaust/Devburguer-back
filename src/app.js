@@ -6,7 +6,7 @@ import cors from 'cors'
 import './database'
 
 const corsOptions = {
-  origin: 'https://dev-burger-front.vercel.app',
+  origin: 'https://dev-burguer-rafael.vercel.app',
   credentials: true,
 }
 
